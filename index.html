@@ -370,6 +370,55 @@
                 font-size: 18px;
             }
         }
+        .lightbox {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.9);
+            z-index: 9999;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .lightbox img {
+            max-width: 90%;
+            max-height: 80vh;
+            transition: transform 0.25s ease;
+            cursor: zoom-in;
+        }
+
+        .lightbox.zoom img {
+            transform: scale(1.6);
+            cursor: zoom-out;
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            font-size: 34px;
+            color: #fff;
+            cursor: pointer;
+        }
+
+        .nav-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 50px;
+            color: #fff;
+            cursor: pointer;
+            padding: 10px;
+            user-select: none;
+        }
+
+        .prev-btn {
+            left: 30px;
+        }
+
+        .next-btn {
+            right: 30px;
+        }
     </style>
 </head>
 
@@ -669,10 +718,10 @@
         </div>
 
         <!-- 燈箱 Overlay -->
-        <div id="hotel-lightbox">
+        <div id="lightbox" class="lightbox">
             <span class="close-btn">&times;</span>
             <span class="nav-btn prev-btn">&#10094;</span>
-            <img id="hotel-lightbox-img" src="" alt="Hotel large view" />
+            <img id="lightbox-img" src="" alt="">
             <span class="nav-btn next-btn">&#10095;</span>
         </div>
 
@@ -1154,8 +1203,8 @@
 <!-- 燈箱控制 + 漢堡選單控制腳本 -->
 <script>
     (function () {
-
-        // ---- Multiple album support ----
+    
+        // ---- Album 設定 ----
         const albums = {
             hotel: [
                 "image/room1.jpg",
@@ -1169,102 +1218,104 @@
                 "image/1230_dinner_003.jpg"
             ]
         };
-
+    
         let activeImages = [];
         let currentIndex = 0;
-
-        const lightbox = document.getElementById("hotel-lightbox");
-        const lightboxImg = document.getElementById("hotel-lightbox-img");
-        const closeBtn = document.querySelector("#hotel-lightbox .close-btn");
-        const prevBtn = document.querySelector("#hotel-lightbox .prev-btn");
-        const nextBtn = document.querySelector("#hotel-lightbox .next-btn");
-
-
-        function openAlbum(albumKey, index) {
-            activeImages = albums[albumKey];
+    
+        // ---- Lightbox 元件 ----
+        const lightbox = document.getElementById("lightbox");
+        const lightboxImg = document.getElementById("lightbox-img");
+        const closeBtn = document.querySelector(".close-btn");
+        const prevBtn = document.querySelector(".prev-btn");
+        const nextBtn = document.querySelector(".next-btn");
+    
+        // ---- 開啟燈箱 ----
+        function openAlbum(albumName, index) {
+            activeImages = albums[albumName];
             currentIndex = index;
-
+    
             lightboxImg.src = activeImages[currentIndex];
             lightbox.style.display = "flex";
         }
-
+    
+        // ---- 關閉燈箱 ----
         function closeLightbox() {
             lightbox.style.display = "none";
+            lightbox.classList.remove("zoom");
         }
-
+    
+        // ---- 上一張 ----
         function showPrev() {
             currentIndex = (currentIndex - 1 + activeImages.length) % activeImages.length;
             lightboxImg.src = activeImages[currentIndex];
         }
-
+    
+        // ---- 下一張 ----
         function showNext() {
             currentIndex = (currentIndex + 1) % activeImages.length;
             lightboxImg.src = activeImages[currentIndex];
         }
-
-
-        // ---- Bind hotel gallery ----
-        document.querySelectorAll(".hotel-thumb").forEach((img) => {
-            img.addEventListener("click", () => {
-                openAlbum("hotel", parseInt(img.dataset.index));
+    
+        // ---- 點圖片縮放 ----
+        lightboxImg.addEventListener("click", () => {
+            lightbox.classList.toggle("zoom");
+        });
+    
+        // ---- 綁定所有 gallery （最重要！）----
+        document.querySelectorAll(".gallery").forEach(gallery => {
+            const album = gallery.dataset.album;
+    
+            gallery.querySelectorAll(".gallery-thumb").forEach(img => {
+                img.addEventListener("click", () => {
+                    openAlbum(album, parseInt(img.dataset.index));
+                });
             });
         });
-
-        // ---- Bind 12/30 dinner gallery ----
-        document.querySelectorAll(".dinner1230-thumb").forEach(img => {
-            img.addEventListener("click", () => {
-                const index = parseInt(img.dataset.index, 10) || 0;
-                openAlbum("dinner1230", index);
-            });
-        });
-
-
-        // ---- Lightbox Controls ----
+    
+        // ---- Lightbox 控制 ----
         closeBtn.addEventListener("click", closeLightbox);
         prevBtn.addEventListener("click", showPrev);
         nextBtn.addEventListener("click", showNext);
-
+    
         lightbox.addEventListener("click", (e) => {
             if (e.target === lightbox) closeLightbox();
         });
-
+    
         window.addEventListener("keydown", (e) => {
             if (lightbox.style.display === "flex") {
-                if (e.key === "Escape") closeLightbox();
                 if (e.key === "ArrowLeft") showPrev();
                 if (e.key === "ArrowRight") showNext();
+                if (e.key === "Escape") closeLightbox();
             }
         });
+    
+        // ---- 手機選單 ----
         const menuToggle = document.querySelector(".menu-toggle");
         const mobileMenuOverlay = document.getElementById("mobileMenu");
-
+    
         function openMenu() {
             mobileMenuOverlay.classList.add("open");
         }
-
+    
         function closeMenu() {
             mobileMenuOverlay.classList.remove("open");
         }
-
+    
         if (menuToggle && mobileMenuOverlay) {
-
-            // 點三條線開啟選單
             menuToggle.addEventListener("click", openMenu);
-
-            // 點背景關閉選單
+    
             mobileMenuOverlay.addEventListener("click", function (e) {
-                if (e.target === mobileMenuOverlay) {
-                    closeMenu();
-                }
+                if (e.target === mobileMenuOverlay) closeMenu();
             });
-
-            // 點選側邊欄的連結後關閉
+    
             mobileMenuOverlay.querySelectorAll("a").forEach(link => {
                 link.addEventListener("click", closeMenu);
             });
         }
+    
     })();
 </script>
+    
 
 <!-- Service Worker 註冊（PWA） -->
 <script>
