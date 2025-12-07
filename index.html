@@ -192,21 +192,22 @@
             font-size: 12px;
         }
 
-        /* Hotel gallery / lightbox */
-        .hotel-gallery {
+        /* --- 通用 Gallery --- */
+        .gallery {
             display: flex;
             gap: 8px;
-            margin-top: 12px;
             flex-wrap: wrap;
+            margin-top: 12px;
         }
 
-        .hotel-thumb {
-            width: 30%;
+        .gallery-thumb {
+            width: calc(33.33% - 6px);
             border-radius: 10px;
             cursor: pointer;
             object-fit: cover;
+            aspect-ratio: 1 / 1; /* 統一正方形可視範圍 */
+            background: #f2f2f2;
         }
-
         #hotel-lightbox {
             display: none;
             position: fixed;
@@ -390,15 +391,6 @@
         <a href="#day4">1/2</a>
         <a href="#day5">1/3</a>
     </div>
-</div>
-
-<!-- 日期快選 -->
-<div class="date-bar">
-    <a class="date-btn" href="#day1">12/30</a>
-    <a class="date-btn" href="#day2">12/31</a>
-    <a class="date-btn" href="#day3">1/1</a>
-    <a class="date-btn" href="#day4">1/2</a>
-    <a class="date-btn" href="#day5">1/3</a>
 </div>
 
 <div class="container">
@@ -649,7 +641,7 @@
                      style="width:70%; max-width:400px; border-radius:12px; display:block; margin:10px auto;">
             </div>
             <div style="margin-top:12px;">
-                <img src="image/airplan_ticket_go&back_chang.png"
+                <img src="image/airplan_ticket_GO&back_CHANG.png"
                      style="width:70%; max-width:400px; border-radius:12px; display:block; margin:10px auto;">
             </div>
         </div>
@@ -664,32 +656,10 @@
                href="https://www.google.com/maps/search/?api=1&query=The+Sacha+Apart-Hotel+Thonglor"
                target="_blank">Google 地圖</a>
 
-            <!-- 主圖片 -->
-            <div style="margin-top:12px;">
-                <img src="image/Hotel.png"
-                     style="width:70%; max-width:450px; border-radius:12px; display:block; margin:10px auto;">
-            </div>
-
-            <!-- 縮圖畫廊 -->
-            <div class="hotel-gallery">
-                <img
-                    class="hotel-thumb"
-                    src="image/room1.jpg"
-                    data-index="0"
-                    alt="Room Photo 1"
-                />
-                <img
-                    class="hotel-thumb"
-                    src="image/room2.jpg"
-                    data-index="1"
-                    alt="Room Photo 2"
-                />
-                <img
-                    class="hotel-thumb"
-                    src="image/room3.jpg"
-                    data-index="2"
-                    alt="Room Photo 3"
-                />
+            <div class="gallery" data-album="hotel">
+                <img class="gallery-thumb" src="image/room1.jpg" data-index="0">
+                <img class="gallery-thumb" src="image/room2.jpg" data-index="1">
+                <img class="gallery-thumb" src="image/room3.jpg" data-index="2">
             </div>
         </div>
 
@@ -743,6 +713,12 @@
                     店內提供傳統泰式燒臘與手工雞蛋麵，最有名的是烤鴨雞蛋麵。<br>
                     用餐方式：抵達後向店員拿號碼牌，等待叫號即可內用。
                 </p>
+                <div class="gallery" data-album="dinner1230">
+                    <img class="gallery-thumb" src="image/1230_dinner_000.jpg" data-index="0">
+                    <img class="gallery-thumb" src="image/1230_dinner_001.jpg" data-index="1">
+                    <img class="gallery-thumb" src="image/1230_dinner_002.jpg" data-index="2">
+                    <img class="gallery-thumb" src="image/1230_dinner_003.jpg" data-index="3">
+                </div>
             </div>
         </div>
 
@@ -1173,25 +1149,37 @@
 <!-- 燈箱控制 + 漢堡選單控制腳本 -->
 <script>
     (function () {
-        // Hotel lightbox
-        const images = [
-            "image/room1.jpg",
-            "image/room2.jpg",
-            "image/room3.jpg"
-        ];
 
-        const thumbs = document.querySelectorAll(".hotel-thumb");
+        // ---- Multiple album support ----
+        const albums = {
+            hotel: [
+                "image/room1.jpg",
+                "image/room2.jpg",
+                "image/room3.jpg"
+            ],
+            dinner1230: [
+                "image/1230_dinner_000.jpg",
+                "image/1230_dinner_001.jpg",
+                "image/1230_dinner_002.jpg",
+                "image/1230_dinner_003.jpg"
+            ]
+        };
+
+        let activeImages = [];
+        let currentIndex = 0;
+
         const lightbox = document.getElementById("hotel-lightbox");
         const lightboxImg = document.getElementById("hotel-lightbox-img");
         const closeBtn = document.querySelector("#hotel-lightbox .close-btn");
         const prevBtn = document.querySelector("#hotel-lightbox .prev-btn");
         const nextBtn = document.querySelector("#hotel-lightbox .next-btn");
 
-        let currentIndex = 0;
 
-        function openLightbox(index) {
+        function openAlbum(albumKey, index) {
+            activeImages = albums[albumKey];
             currentIndex = index;
-            lightboxImg.src = images[currentIndex];
+
+            lightboxImg.src = activeImages[currentIndex];
             lightbox.style.display = "flex";
         }
 
@@ -1200,37 +1188,40 @@
         }
 
         function showPrev() {
-            if (images.length > 1) {
-                currentIndex = (currentIndex - 1 + images.length) % images.length;
-                lightboxImg.src = images[currentIndex];
-            }
+            currentIndex = (currentIndex - 1 + activeImages.length) % activeImages.length;
+            lightboxImg.src = activeImages[currentIndex];
         }
 
         function showNext() {
-            if (images.length > 1) {
-                currentIndex = (currentIndex + 1) % images.length;
-                lightboxImg.src = images[currentIndex];
-            }
+            currentIndex = (currentIndex + 1) % activeImages.length;
+            lightboxImg.src = activeImages[currentIndex];
         }
 
-        thumbs.forEach((img) => {
+
+        // ---- Bind hotel gallery ----
+        document.querySelectorAll(".hotel-thumb").forEach((img) => {
             img.addEventListener("click", () => {
-                const index = parseInt(img.getAttribute("data-index"), 10) || 0;
-                openLightbox(index);
+                openAlbum("hotel", parseInt(img.dataset.index));
             });
         });
 
-        if (closeBtn) closeBtn.addEventListener("click", closeLightbox);
-        if (prevBtn) prevBtn.addEventListener("click", showPrev);
-        if (nextBtn) nextBtn.addEventListener("click", showNext);
-
-        if (lightbox) {
-            lightbox.addEventListener("click", (e) => {
-                if (e.target === lightbox) {
-                    closeLightbox();
-                }
+        // ---- Bind 12/30 dinner gallery ----
+        document.querySelectorAll(".dinner1230-thumb").forEach(img => {
+            img.addEventListener("click", () => {
+                const index = parseInt(img.dataset.index, 10) || 0;
+                openAlbum("dinner1230", index);
             });
-        }
+        });
+
+
+        // ---- Lightbox Controls ----
+        closeBtn.addEventListener("click", closeLightbox);
+        prevBtn.addEventListener("click", showPrev);
+        nextBtn.addEventListener("click", showNext);
+
+        lightbox.addEventListener("click", (e) => {
+            if (e.target === lightbox) closeLightbox();
+        });
 
         window.addEventListener("keydown", (e) => {
             if (lightbox.style.display === "flex") {
@@ -1240,45 +1231,6 @@
             }
         });
 
-        // Mobile hamburger menu
-        const menuToggle = document.querySelector(".menu-toggle");
-        const mobileMenuOverlay = document.getElementById("mobileMenu");
-
-        function openMenu() {
-            mobileMenuOverlay.classList.add("open");
-        }
-
-        function closeMenu() {
-            mobileMenuOverlay.classList.remove("open");
-        }
-
-        if (menuToggle) {
-            menuToggle.addEventListener("click", openMenu);
-        }
-
-        if (mobileMenuOverlay) {
-            // 點半透明背景關閉
-            mobileMenuOverlay.addEventListener("click", (e) => {
-                if (e.target === mobileMenuOverlay) {
-                    closeMenu();
-                }
-            });
-
-            // 點選單連結也關閉
-            const links = mobileMenuOverlay.querySelectorAll("a");
-            links.forEach((link) => {
-                link.addEventListener("click", () => {
-                    closeMenu();
-                });
-            });
-        }
-
-        // ESC 也可以關閉選單
-        window.addEventListener("keydown", (e) => {
-            if (e.key === "Escape" && mobileMenuOverlay.classList.contains("open")) {
-                closeMenu();
-            }
-        });
     })();
 </script>
 
