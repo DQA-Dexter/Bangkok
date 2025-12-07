@@ -1,0 +1,1168 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>2025 曼谷跨年旅行</title>
+
+    <!-- PWA / iPhone App 設定 -->
+    <meta name="theme-color" content="#ff5e62">
+    <link rel="manifest" href="manifest.json">
+    <link rel="apple-touch-icon" href="image/icon-180.png">
+
+    <style>
+        body {
+            margin: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Noto Sans TC", sans-serif;
+            background: #f7f7f7;
+            color: #333;
+        }
+
+        /* Top Bar */
+        header {
+            background: linear-gradient(135deg, #ff8a00, #ff5e62);
+            padding: 14px;
+            color: white;
+            text-align: center;
+            font-size: 22px;
+            font-weight: bold;
+            position: sticky;
+            top: 0;
+            z-index: 20;
+        }
+
+        /* Date Quick Buttons */
+        .date-bar {
+            display: flex;
+            overflow-x: auto;
+            gap: 8px;
+            padding: 10px;
+            background: white;
+            border-bottom: 1px solid #eee;
+            position: sticky;
+            top: 58px;
+            z-index: 15;
+        }
+
+        .date-btn {
+            flex-shrink: 0;
+            padding: 8px 14px;
+            background: #ffece8;
+            color: #ff5e62;
+            border-radius: 20px;
+            font-size: 14px;
+            white-space: nowrap;
+            text-decoration: none;
+            border: 1px solid #ffb8b0;
+        }
+
+        /* Main Layout */
+        .container {
+            display: flex;
+        }
+
+        /* Menu */
+        nav {
+            width: 160px;
+            background: white;
+            border-right: 1px solid #ddd;
+            height: calc(100vh - 110px);
+            position: sticky;
+            top: 110px;
+            padding-top: 10px;
+            overflow-y: auto;
+        }
+
+        nav a {
+            display: block;
+            padding: 12px 16px;
+            color: #444;
+            text-decoration: none;
+            border-bottom: 1px solid #f1f1f1;
+            font-size: 15px;
+        }
+
+        nav a:hover {
+            background: #ffe5d8;
+        }
+
+        /* Content */
+        .content {
+            flex: 1;
+            padding: 16px;
+        }
+
+        .section {
+            background: white;
+            padding: 16px;
+            margin-bottom: 20px;
+            border-radius: 10px;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+        }
+
+        h2 {
+            margin-top: 0;
+            color: #ff5e62;
+        }
+
+        .map-btn {
+            display: inline-block;
+            margin-top: 6px;
+            padding: 6px 12px;
+            background: #ff5e62;
+            color: white;
+            border-radius: 8px;
+            text-decoration: none;
+            font-size: 13px;
+        }
+
+        .item {
+            margin-bottom: 12px;
+        }
+
+        /* Hotel gallery / lightbox */
+        .hotel-gallery {
+            display: flex;
+            gap: 8px;
+            margin-top: 12px;
+            flex-wrap: wrap;
+        }
+
+        .hotel-thumb {
+            width: 30%;
+            border-radius: 10px;
+            cursor: pointer;
+            object-fit: cover;
+        }
+
+        #hotel-lightbox {
+            display: none;
+            position: fixed;
+            z-index: 999;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.85);
+            align-items: center;
+            justify-content: center;
+        }
+
+        #hotel-lightbox img {
+            max-width: 90%;
+            max-height: 80vh;
+            border-radius: 12px;
+        }
+
+        #hotel-lightbox .close-btn {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-size: 28px;
+            color: #fff;
+            cursor: pointer;
+        }
+
+        #hotel-lightbox .nav-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 32px;
+            color: #fff;
+            cursor: pointer;
+            padding: 10px;
+        }
+
+        #hotel-lightbox .prev-btn {
+            left: 20px;
+        }
+
+        #hotel-lightbox .next-btn {
+            right: 20px;
+        }
+
+        @media (max-width: 768px) {
+            nav {
+                display: none;
+            }
+
+            .container {
+                display: block;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<header>2025 曼谷五天四夜行程</header>
+
+<!-- 日期快選 -->
+<div class="date-bar">
+    <a class="date-btn" href="#day1">12/30</a>
+    <a class="date-btn" href="#day2">12/31</a>
+    <a class="date-btn" href="#day3">1/1</a>
+    <a class="date-btn" href="#day4">1/2</a>
+    <a class="date-btn" href="#day5">1/3</a>
+</div>
+
+<div class="container">
+
+    <!-- MENU -->
+    <nav>
+        <a href="#summary">行程總表</a>
+        <a href="#traffic">交通行程表</a>
+        <a href="#ticket">機票資訊</a>
+        <a href="#hotel">住宿資訊</a>
+        <a href="#day1">12/30</a>
+        <a href="#day2">12/31</a>
+        <a href="#day3">1/1</a>
+        <a href="#day4">1/2</a>
+        <a href="#day5">1/3</a>
+    </nav>
+
+    <!-- CONTENT -->
+    <div class="content">
+
+        <!-- 行程總表 -->
+        <div class="section" id="summary">
+            <h2>📅 行程總表</h2>
+
+            <style>
+                table {
+                    width: 100%;
+                    border-collapse: collapse;
+                    margin-top: 12px;
+                    font-size: 14px;
+                }
+
+                th,
+                td {
+                    border: 1px solid #e0e0e0;
+                    padding: 10px;
+                    vertical-align: top;
+                }
+
+                th {
+                    background: #fff4ef;
+                    color: #ff5e62;
+                    width: 18%;
+                }
+
+                .day-title {
+                    background: #ffece8;
+                    font-weight: bold;
+                    text-align: center;
+                }
+            </style>
+
+            <table>
+                <tr>
+                    <th>日期</th>
+                    <td class="day-title">12/30（二）</td>
+                    <td class="day-title">12/31（三）</td>
+                    <td class="day-title">1/1（四）</td>
+                    <td class="day-title">1/2（五）</td>
+                    <td class="day-title">1/3（六）</td>
+                </tr>
+
+                <tr>
+                    <th>早</th>
+                    <td>10:00 出發<br>10:30 東湖接你</td>
+                    <td>7-11 早餐<br>11:00 出門</td>
+                    <td>12:00 出門<br>7-11 早餐</td>
+                    <td>10:30 出門搭 BTS<br>7-11 早餐</td>
+                    <td>12:00 Check out</td>
+                </tr>
+
+                <tr>
+                    <th>中</th>
+                    <td>
+                        11:30 桃園一航<br>
+                        13:50 CI835 飛<br>
+                        16:45 抵達 BKK（B1 換錢）<br>
+                        搭 Bolt 至飯店
+                    </td>
+                    <td>
+                        12:00 換衣服<br>
+                        13:30～16:30 鄭王廟
+                    </td>
+                    <td>
+                        13:00 王朗市場<br>
+                        按摩
+                    </td>
+                    <td>
+                        11:00 暹羅廣場<br>
+                        Big C（Ratchadamri）<br>
+                        先回飯店
+                    </td>
+                    <td>
+                        13:30 前往機場<br>
+                        15:20 BKK 機場<br>
+                        17:50 飛機
+                    </td>
+                </tr>
+
+                <tr>
+                    <th>晚</th>
+                    <td>
+                        20:00 入住通羅薩查公寓酒店<br>
+                        晚餐：Bamee Kon Sae Lee<br>
+                        飯店附近走跳
+                    </td>
+                    <td>
+                        17:30 朱拉隆功夜市<br>
+                        按摩<br>
+                        Central World 跨年煙火
+                    </td>
+                    <td>
+                        ICONSIAM<br>
+                        回飯店附近按摩
+                    </td>
+                    <td>
+                        希娜克琳火車夜市<br>
+                        回飯店按摩
+                    </td>
+                    <td>
+                        22:25 抵達台灣
+                    </td>
+                </tr>
+
+                <tr>
+                    <th>住宿</th>
+                    <td colspan="5">
+                        通羅薩查公寓酒店（THE SACHA Apart-Hotel Thonglor）<br>
+                        房型：薩查一室房 XL・特大床（不含餐）<br>
+                        費用：玉山信用卡 NT$11,832／4 晚（已付款、不可取消）<br>
+                        地址：67 Soi Sukhumvit 38, Phra Khanong, Klong Toei<br>
+                        電話：+66-2-3193838
+                    </td>
+                </tr>
+            </table>
+        </div>
+
+        <!-- 交通行程表 -->
+        <div class="section" id="traffic">
+            <h2>🚗 交通行程表</h2>
+
+            <style>
+                .traffic-table {
+                    width: 100%;
+                    border-collapse: collapse;
+                    font-size: 14px;
+                    margin-top: 12px;
+                }
+
+                .traffic-table th,
+                .traffic-table td {
+                    border: 1px solid #e0e0e0;
+                    padding: 8px;
+                    vertical-align: top;
+                }
+
+                .traffic-table th {
+                    background: #fff4ef;
+                    color: #ff5e62;
+                    width: 20%;
+                }
+
+                .traffic-day {
+                    background: #ffece8;
+                    font-weight: bold;
+                    text-align: center;
+                }
+            </style>
+
+            <table class="traffic-table">
+                <tr>
+                    <th>Day</th>
+                    <th>行程</th>
+                    <th>出發時間</th>
+                    <th>抵達時間</th>
+                    <th>車程 / 車資</th>
+                </tr>
+
+                <tr>
+                    <td class="traffic-day" rowspan="4">12/30（二）</td>
+                    <td>Dexter 家 → 東湖</td>
+                    <td>10:00</td>
+                    <td>10:30</td>
+                    <td>爸爸接送</td>
+                </tr>
+                <tr>
+                    <td>東湖 → 桃園第一航廈</td>
+                    <td>10:30</td>
+                    <td>11:30</td>
+                    <td>—</td>
+                </tr>
+                <tr>
+                    <td>桃園 → BKK（CI835）</td>
+                    <td>13:50</td>
+                    <td>16:45</td>
+                    <td>—</td>
+                </tr>
+                <tr>
+                    <td>BKK → 飯店</td>
+                    <td>19:00</td>
+                    <td>20:00</td>
+                    <td>Bolt 約 300</td>
+                </tr>
+
+                <tr>
+                    <td class="traffic-day" rowspan="4">12/31（三）</td>
+                    <td>飯店 → 鄭王廟</td>
+                    <td>11:00</td>
+                    <td>12:00</td>
+                    <td>Bolt：250</td>
+                </tr>
+                <tr>
+                    <td>鄭王廟 → 朱拉夜市</td>
+                    <td>16:30</td>
+                    <td>17:30</td>
+                    <td>Bolt：180</td>
+                </tr>
+                <tr>
+                    <td>夜市 → Central World</td>
+                    <td>22:00</td>
+                    <td>22:30</td>
+                    <td>—</td>
+                </tr>
+                <tr>
+                    <td>Central World → 飯店</td>
+                    <td>00:30</td>
+                    <td>01:30</td>
+                    <td>Bolt：300</td>
+                </tr>
+
+                <tr>
+                    <td class="traffic-day" rowspan="3">1/1（四）</td>
+                    <td>飯店 → 王朗市場</td>
+                    <td>12:00</td>
+                    <td>13:00</td>
+                    <td>Bolt：300</td>
+                </tr>
+                <tr>
+                    <td>王朗市場 → ICONSIAM</td>
+                    <td>15:30</td>
+                    <td>16:00</td>
+                    <td>船</td>
+                </tr>
+                <tr>
+                    <td>ICONSIAM → 飯店</td>
+                    <td>22:00</td>
+                    <td>22:45</td>
+                    <td>Bolt：250</td>
+                </tr>
+
+                <tr>
+                    <td class="traffic-day" rowspan="5">1/2（五）</td>
+                    <td>飯店 → 暹羅廣場</td>
+                    <td>10:30</td>
+                    <td>11:00</td>
+                    <td>BTS：約 40</td>
+                </tr>
+                <tr>
+                    <td>暹羅 → Big C</td>
+                    <td>16:30</td>
+                    <td>17:00</td>
+                    <td>步行 / BTS</td>
+                </tr>
+                <tr>
+                    <td>Big C → 飯店</td>
+                    <td>18:00</td>
+                    <td>18:15</td>
+                    <td>Bolt：100</td>
+                </tr>
+                <tr>
+                    <td>飯店 → 希娜克琳火車夜市</td>
+                    <td>18:30</td>
+                    <td>19:00</td>
+                    <td>Bolt：250</td>
+                </tr>
+                <tr>
+                    <td>夜市 → 飯店</td>
+                    <td>22:00</td>
+                    <td>22:30</td>
+                    <td>Bolt：250</td>
+                </tr>
+
+                <tr>
+                    <td class="traffic-day">1/3（六）</td>
+                    <td>飯店 → BKK 機場</td>
+                    <td>13:30</td>
+                    <td>14:30</td>
+                    <td>Bolt：400</td>
+                </tr>
+            </table>
+        </div>
+
+        <!-- 機票 -->
+        <div class="section" id="ticket">
+            <h2>✈️ 機票資訊</h2>
+            <p>去程：CI835 — 13:50 → 16:45 BKK</p>
+            <p>回程：17:50 → 22:25 TPE</p>
+            <div style="margin-top:12px;">
+                <img src="image/airplan_ticket_go_HSU.png"
+                     style="width:70%; border-radius:12px; display:block; margin:10px auto;">
+            </div>
+            <div style="margin-top:12px;">
+                <img src="image/airplan_ticket_back_HSU.png"
+                     style="width:70%; border-radius:12px; display:block; margin:10px auto;">
+            </div>
+            <div style="margin-top:12px;">
+                <img src="image/airplan_ticket_go&back_chang.png"
+                     style="width:70%; border-radius:12px; display:block; margin:10px auto;">
+            </div>
+        </div>
+
+        <!-- 住宿 -->
+        <div class="section" id="hotel">
+            <h2>🏨 住宿資訊</h2>
+
+            <p><b>The Sacha Apart-Hotel Thonglor</b></p>
+            <p>地址：67 Soi Sukhumvit 38, Bangkok</p>
+            <a class="map-btn"
+               href="https://www.google.com/maps/search/?api=1&query=The+Sacha+Apart-Hotel+Thonglor"
+               target="_blank">Google 地圖</a>
+
+            <!-- 主圖片 -->
+            <div style="margin-top:12px;">
+                <img src="image/Hotel.png"
+                     style="width:70%; border-radius:12px; display:block; margin:10px auto;">
+            </div>
+
+            <!-- 縮圖畫廊 -->
+            <div class="hotel-gallery">
+                <img
+                    class="hotel-thumb"
+                    src="image/room1.jpg"
+                    data-index="0"
+                    alt="Room Photo 1"
+                />
+                <img
+                    class="hotel-thumb"
+                    src="image/room2.jpg"
+                    data-index="1"
+                    alt="Room Photo 2"
+                />
+                <img
+                    class="hotel-thumb"
+                    src="image/room3.jpg"
+                    data-index="2"
+                    alt="Room Photo 3"
+                />
+            </div>
+        </div>
+
+        <!-- 燈箱 Overlay -->
+        <div id="hotel-lightbox">
+            <span class="close-btn">&times;</span>
+            <span class="nav-btn prev-btn">&#10094;</span>
+            <img id="hotel-lightbox-img" src="" alt="Hotel large view" />
+            <span class="nav-btn next-btn">&#10095;</span>
+        </div>
+
+        <!-- Day 1 -->
+        <div class="section" id="day1">
+            <h2>12/30（二）抵達曼谷</h2>
+
+            <!-- 換錢 -->
+            <div class="item">
+                <h3>💰 素萬那普機場換錢（SuperRich / Happy Rich）</h3>
+
+                <p>
+                    <b>地點：</b>Suvarnabhumi Airport B1（機場捷運搭乘處旁）<br>
+                    <b>營業時間：</b>05:00–00:00
+                </p>
+
+                <a class="map-btn"
+                   href="https://www.google.com/maps/search/?api=1&query=Suvarnabhumi+Airport+B1"
+                   target="_blank">地圖</a>
+
+                <p style="margin-top:10px;">
+                    機場 B1 價格最漂亮，SuperRich（橘色）與 Happy Rich 都是遊客換泰銖的首選。
+                    下飛機後即可直接在同一層完成換匯，非常方便。
+                </p>
+            </div>
+
+            <hr style="border:none; border-top:1px solid #eee; margin:20px 0;">
+
+            <!-- 晚餐 Bamee Kon Sae Lee -->
+            <div class="item">
+                <h3>🍜 脆皮叉燒雞蛋麵（Bamee Kon Sae Lee）</h3>
+
+                <p>
+                    <b>地址：</b>1081 Sukhumvit Rd, Watthana, Bangkok 10110<br>
+                    <b>營業時間：</b>06:30–23:00
+                </p>
+
+                <a class="map-btn"
+                   href="https://www.google.com/maps/search/?api=1&query=Bamee+Kon+Sae+Lee"
+                   target="_blank">地圖</a>
+
+                <p style="margin-top:10px;">
+                    店內提供傳統泰式燒臘與手工雞蛋麵，最有名的是烤鴨雞蛋麵。<br>
+                    用餐方式：抵達後向店員拿號碼牌，等待叫號即可內用。
+                </p>
+            </div>
+        </div>
+
+        <!-- Day 2 -->
+        <div class="section" id="day2">
+            <h2>12/31（三）鄭王廟・朱拉夜市・跨年</h2>
+
+            <!-- 鄭王廟 + 泰服體驗 -->
+            <div class="item">
+                <h3>🕌 鄭王廟（Wat Arun）＋ 泰服體驗</h3>
+
+                <p><b>地址：</b>158 Wang Doem Rd, Wat Arun, Bangkok Yai, Bangkok 10600</p>
+                <p><b>營業時間：</b>08:00–18:00</p>
+                <p><b>門票：</b>200 泰銖（含一瓶水）</p>
+                <a class="map-btn"
+                   href="https://www.google.com/maps/search/?api=1&query=Wat+Arun"
+                   target="_blank">地圖</a>
+
+                <h4 style="margin-top:15px;">👗 泰服租借（MAHASANÉ THAI COSTUME）</h4>
+                <p>
+                    <b>租借價格：</b>男女皆 200 泰銖 / 3 小時<br>
+                    <b>加價項目：</b>髮型、包包、鞋子、陽傘各 50 泰銖
+                </p>
+
+                <p>
+                    <b>泰服建議：</b><br>
+                    ・女生泰服多為露肩款，建議穿無肩帶內衣。<br>
+                    ・鞋子可選白色、銀色、或小白鞋。<br>
+                    ・男生黑、白鞋皆可。<br>
+                    ・拍照後會滿身大汗，記得帶替換衣物！<br>
+                </p>
+
+                <p>
+                    <b>泰服店家差異：</b><br>
+                    ・高價位店家通常有冷氣與裝潢，挑選更舒適<br>
+                    ・款式材質更精緻，例如漸層色、粉色系等<br>
+                    ・有些店包含所有配件，有些需加價<br>
+                    ・部分店有簡易盤髮（免費或 50B），化妝則另外收費（100–400B）
+                </p>
+
+                <h4 style="margin-top:15px;">🌟 景點介紹</h4>
+                <p>
+                    黎明寺（鄭王廟）被稱為「泰國埃菲爾鐵塔」，是泰國最大的舍利式塔，
+                    以潔白精緻的陶瓷拼貼與高塔聞名。中央主塔（Phra Prang）高達 79 公尺，
+                    登塔後可俯瞰湄南河、大皇宮、臥佛寺，是曼谷最經典的景色之一。
+                </p>
+
+                <p>
+                    廟內供奉玉佛、釋迦牟尼佛像，四面佛區也非常著名。
+                    進入廟宇須注意穿著，不可過度暴露，請保持安靜尊重。
+                </p>
+            </div>
+
+            <hr style="border:none; border-top:1px solid #eee; margin:20px 0;">
+
+            <!-- 朱拉夜市 -->
+            <div class="item">
+                <h3>🌙 朱拉隆功大學美食一條街（Thanon Banthat Thong）</h3>
+
+                <p><b>地址：</b>ถนน บรรทัดทอง Wang Mai, Pathum Wan, Bangkok</p>
+                <p><b>營業時間：</b>依店家為主（多數為 16:00–00:00）</p>
+                <p><b>交通：</b>BTS National Stadium 1 號出口步行 7 分鐘</p>
+
+                <a class="map-btn"
+                   href="https://www.google.com/maps/search/?api=1&query=Banthat+Thong+Night+Market"
+                   target="_blank">地圖</a>
+
+                <!-- 朱拉夜市餐廳表格 -->
+                <h4 style="margin-top:20px;">🍽️ 夜市熱門餐廳一覽表</h4>
+
+                <style>
+                    .food-table {
+                        width: 100%;
+                        border-collapse: collapse;
+                        font-size: 14px;
+                        margin-top: 12px;
+                    }
+
+                    .food-table th,
+                    .food-table td {
+                        border: 1px solid #e0e0e0;
+                        padding: 10px;
+                        vertical-align: top;
+                    }
+
+                    .food-table th {
+                        background: #fff4ef;
+                        color: #ff5e62;
+                        width: 20%;
+                        text-align: left;
+                    }
+
+                    .map-btn-small {
+                        display: inline-block;
+                        margin-top: 6px;
+                        padding: 4px 10px;
+                        background: #ff5e62;
+                        color: white;
+                        border-radius: 6px;
+                        text-decoration: none;
+                        font-size: 12px;
+                    }
+                </style>
+
+                <table class="food-table">
+                    <tr>
+                        <th>餐廳</th>
+                        <th>介紹</th>
+                    </tr>
+
+                    <!-- 朱拉50巷廚房 -->
+                    <tr>
+                        <td>
+                            <b>朱拉50巷廚房</b><br>
+                            ⭐4.2（1868）<br>
+                            <b>營業時間：</b>（未提供）<br>
+                            <a class="map-btn-small"
+                               href="https://www.google.com/maps/search/?api=1&query=Chula+50+Kitchen"
+                               target="_blank">地圖</a>
+                        </td>
+                        <td>
+                            - 蟹肉滑蛋飯比許多網紅店更好吃，價格親民（約70銖）<br>
+                            - 平價熱炒，咖喱螃蟹人氣高
+                        </td>
+                    </tr>
+
+                    <!-- Jeh O Chula -->
+                    <tr>
+                        <td>
+                            <b>Jeh O Chula（必比登）</b><br>
+                            ⭐4.1（7980）<br>
+                            <b>營業時間：</b>16:30–01:00（熱門排隊店）<br>
+                            <a class="map-btn-small"
+                               href="https://www.google.com/maps/search/?api=1&query=Jeh+O+Chula"
+                               target="_blank">地圖</a>
+                        </td>
+                        <td>
+                            - 招牌「Mama冬陰功泡麵鍋」220B<br>
+                            - 必點：脆皮燒肉、熱炒類<br>
+                            - 使用 QueQ 叫號，不然可能排 30–60 分鐘<br>
+                            - 泡麵湯偏辣，建議點小辣或微辣<br>
+                            - 只收現金
+                        </td>
+                    </tr>
+
+                    <!-- Heng HoiTod Chawlae -->
+                    <tr>
+                        <td>
+                            <b>Heng HoiTod Chawlae</b><br>
+                            ⭐4.9（6636）<br>
+                            <b>營業時間：</b>11:00–22:00<br>
+                            <a class="map-btn-small"
+                               href="https://www.google.com/maps/search/?api=1&query=Heng+Hoi+Tod+Chawlae"
+                               target="_blank">地圖</a>
+                        </td>
+                        <td>
+                            - 海鮮煎餅酥脆多料（100–200B）<br>
+                            - 海鮮泰式炒河粉超高評價<br>
+                            - 五星評論送飲料
+                        </td>
+                    </tr>
+
+                    <!-- Nai Song Moo Satay -->
+                    <tr>
+                        <td>
+                            <b>Nai Song Moo Satay（豬沙嗲）</b><br>
+                            ⭐4.5（713）<br>
+                            <b>營業時間：</b>（未提供）<br>
+                            <a class="map-btn-small"
+                               href="https://www.google.com/maps/search/?api=1&query=Nai+Song+Moo+Satay"
+                               target="_blank">地圖</a>
+                        </td>
+                        <td>
+                            - 香氣十足的炭烤豬肋沙嗲<br>
+                            - 平價好吃
+                        </td>
+                    </tr>
+
+                    <!-- Neung Nom Nua -->
+                    <tr>
+                        <td>
+                            <b>Neung Nom Nua（烤吐司）</b><br>
+                            ⭐4.0（1771）<br>
+                            <b>營業時間：</b>（未提供）<br>
+                            <a class="map-btn-small"
+                               href="https://www.google.com/maps/search/?api=1&query=Neung+Nom+Nua"
+                               target="_blank">地圖</a>
+                        </td>
+                        <td>
+                            - 牛奶建議泰奶或抹茶口味，巧克力較普通<br>
+                            - 吐司最好吃的是巧克力口味<br>
+                            - 拍照景點，不一定要排隊吃
+                        </td>
+                    </tr>
+
+                    <!-- Tang Chae Tao Than -->
+                    <tr>
+                        <td>
+                            <b>Tang Chae Tao Than（炒粿條）</b><br>
+                            ⭐4.5（426）<br>
+                            <b>營業時間：</b>（未提供）<br>
+                            <a class="map-btn-small"
+                               href="https://www.google.com/maps/search/?api=1&query=Tang+Chae+Tao+Than"
+                               target="_blank">地圖</a>
+                        </td>
+                        <td>
+                            - 夜市內公認的不用排隊好店<br>
+                            - 好吃又不貴
+                        </td>
+                    </tr>
+
+                    <!-- Pa Nee Kung Chae Nam Pla -->
+                    <tr>
+                        <td>
+                            <b>Pa Nee Kung Chae Nam Pla（生醃蝦）</b><br>
+                            ⭐4.8（1013）<br>
+                            <b>營業時間：</b>（未提供）<br>
+                            <a class="map-btn-small"
+                               href="https://www.google.com/maps/search/?api=1&query=Pa+Nee+Kung+Chae+Nam+Pla"
+                               target="_blank">地圖</a>
+                        </td>
+                        <td>
+                            - 生醃蝦超高分、必吃名店<br>
+                            - 味道新鮮不腥
+                        </td>
+                    </tr>
+
+                    <!-- Pungdet 爆漿餐包 -->
+                    <tr>
+                        <td>
+                            <b>PUNGDET（爆漿餐包）</b><br>
+                            ⭐4.3（326）<br>
+                            <b>營業時間：</b>17:00–23:00（多數攤位）<br>
+                            <a class="map-btn-small"
+                               href="https://www.google.com/maps/search/?api=1&query=Pungdet+Bangkok"
+                               target="_blank">地圖</a>
+                        </td>
+                        <td>
+                            - 現烤炭火餐包，外酥內軟<br>
+                            - 推薦口味：奶油／斑斕／阿華田<br>
+                            - 若胃容量有限可以跳過（味道普通、醬多）
+                        </td>
+                    </tr>
+
+                    <!-- HAAB.BKK -->
+                    <tr>
+                        <td>
+                            <b>HAAB.BKK（奶油雞蛋糕）</b><br>
+                            ⭐4.4（399）<br>
+                            <b>營業時間：</b>（未提供）<br>
+                            <a class="map-btn-small"
+                               href="https://www.google.com/maps/search/?api=1&query=HAAB+BKK"
+                               target="_blank">地圖</a>
+                        </td>
+                        <td>
+                            - 雞蛋糕 10 個 70B<br>
+                            - 泰奶／斑斕醬需加價（40–50B）
+                        </td>
+                    </tr>
+
+                    <!-- Lek Yai -->
+                    <tr>
+                        <td>
+                            <b>Lek Yai Tom Yum Noodles（打拋豬麵）</b><br>
+                            ⭐4.8（5270）<br>
+                            <b>營業時間：</b>10:00–21:00<br>
+                            <a class="map-btn-small"
+                               href="https://www.google.com/maps/search/?api=1&query=Lek+Yai+Tom+Yum+Noodles"
+                               target="_blank">地圖</a>
+                        </td>
+                        <td>
+                            - 打拋豬超好吃<br>
+                            - 冬陰功湯濃郁，不會過鹹<br>
+                            - 炸三角肉必點！
+                        </td>
+                    </tr>
+                </table>
+
+                <h4 style="margin-top:15px;">💆 按摩推薦（夜市附近）</h4>
+                <p>
+                    • TARA Thai Massage：泰式按摩 60 分鐘 500B<br>
+                    • Vela Thai Massage：泰式按摩 60 分鐘 480B<br>
+                    • Nikko Thai Massage（暹羅廣場）：60 分鐘 471B<br>
+                    <a class="map-btn" href="https://www.kkday.com/zh-tw/product/245938" target="_blank">
+                        KKday 按摩連結
+                    </a>
+                </p>
+            </div>
+
+            <hr style="border:none; border-top:1px solid #eee; margin:20px 0;">
+
+            <!-- 跨年 -->
+            <div class="item">
+                <h3>🎆 曼谷跨年：Central World 跨年煙火</h3>
+
+                <p><b>地址：</b>999/9 Rama I Rd, Pathum Wan, Bangkok 10330</p>
+                <a class="map-btn"
+                   href="https://www.google.com/maps/search/?api=1&query=Central+World+Bangkok"
+                   target="_blank">地圖</a>
+
+                <p style="margin-top:10px;">
+                    曼谷最盛大的跨年活動點之一。大型舞台、倒數煙火與萬人齊聚的跨年氛圍。
+                    建議提早抵達以確保好位置，跨年後人潮多可搭 Bolt 返回飯店。
+                </p>
+            </div>
+        </div>
+
+        <!-- Day 3 -->
+        <div class="section" id="day3">
+            <h2>1/1（四）王朗市場・ICONSIAM</h2>
+
+            <!-- 王朗市場 -->
+            <div class="item">
+                <h3>🛍️ 王朗市場 Wang Lang Market</h3>
+
+                <p><b>地址：</b>Wang Lang Rd, Siriraj, Bangkok Noi, Bangkok 10700</p>
+                <p><b>營業時間：</b>10:00–17:00（多數攤商）</p>
+                <a class="map-btn"
+                   href="https://www.google.com/maps/search/?api=1&query=Wang+Lang+Market+Bangkok"
+                   target="_blank">地圖</a>
+
+                <p style="margin-top:10px;">
+                    王朗市場是當地人最愛的生活型市集，販售各種平價服飾、小吃、生活用品。
+                    鄰近醫院與碼頭，因此人潮多、美食密度高。
+                    適合安排半天散步＋按摩行程。
+                </p>
+
+                <style>
+                    .massage-table {
+                        width: 100%;
+                        border-collapse: collapse;
+                        font-size: 14px;
+                        margin-top: 12px;
+                    }
+
+                    .massage-table th,
+                    .massage-table td {
+                        border: 1px solid #e0e0e0;
+                        padding: 10px;
+                        vertical-align: top;
+                    }
+
+                    .massage-table th {
+                        background: #fff4ef;
+                        color: #ff5e62;
+                        width: 22%;
+                    }
+                </style>
+
+                <h4 style="margin-top:20px;">💆 按摩店家（王朗市場周邊）</h4>
+
+                <table class="massage-table">
+                    <tr>
+                        <th>按摩店</th>
+                        <th>資訊</th>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            <b>Anothai Massage and Spa</b><br>
+                            泰式按摩 60 分鐘：250B
+                        </td>
+                        <td>
+                            - 平價按摩選擇<br>
+                            - 徒步可達王朗市場<br>
+                            <a class="map-btn-small"
+                               href="https://www.google.com/maps/search/?api=1&query=Anothai+Massage+and+Spa"
+                               target="_blank">地圖</a>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            <b>Anothai Massage Siriraj Pier</b><br>
+                            泰式按摩 60 分鐘：250B
+                        </td>
+                        <td>
+                            - 位於碼頭附近，可順路造訪<br>
+                            <a class="map-btn-small"
+                               href="https://www.google.com/maps/search/?api=1&query=Anothai+Massage+Siriraj"
+                               target="_blank">地圖</a>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            <b>Bao Herbal Relax – Wanglung</b><br>
+                            泰式按摩 60 分鐘：300B
+                        </td>
+                        <td>
+                            - 舒服、技術好、評價高<br>
+                            <a class="map-btn-small"
+                               href="https://www.google.com/maps/search/?api=1&query=Bao+Herbal+Relax+Wanglang"
+                               target="_blank">地圖</a>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            <b>Relax Siam Massage</b><br>
+                            精油按摩 60 分鐘：600B
+                        </td>
+                        <td>
+                            - 技術佳、乾淨度高<br>
+                            <a class="map-btn-small"
+                               href="https://www.google.com/maps/search/?api=1&query=Relax+Siam+Massage"
+                               target="_blank">地圖</a>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+
+            <hr style="border:none; border-top:1px solid #eee; margin:20px 0;">
+
+            <!-- ICONSIAM -->
+            <div class="item">
+                <h3>🏬 ICONSIAM（下午行程）</h3>
+
+                <p><b>地址：</b>299 Charoen Nakhon Rd, Khlong Ton Sai, Khlong San, Bangkok 10600</p>
+                <p><b>營業時間：</b>10:00–22:00</p>
+                <a class="map-btn"
+                   href="https://www.google.com/maps/search/?api=1&query=ICONSIAM"
+                   target="_blank">地圖</a>
+
+                <p style="margin-top:10px;">
+                    ICONSIAM 是曼谷最華麗的百貨之一，也是旅客必逛景點。
+                    從精品、平價時尚、3C、泰國文創到 SookSiam 水上市場一應俱全。
+                    建議至少預留 3–4 小時慢慢逛。
+                </p>
+
+                <h4 style="margin-top:20px;">🎁 外國人優惠卡（Tourist Privilege）</h4>
+                <p>
+                    可至旅客服務中心（3樓）或於 KKDAY 事先申請旅客優惠卡，
+                    享有購物折扣、退稅服務更快、部分餐廳折扣等優惠。
+                </p>
+
+                <h4 style="margin-top:20px;">💦 ICONSIAM 戲水瀑布表演</h4>
+                <p>
+                    <b>週一～週四：</b>2 場（12:00–14:00、17:00–20:00）<br>
+                    <b>週五～週日 & 節日：</b>11:00–20:00，每場 15 分鐘（表演間隔 5 分鐘）
+                </p>
+
+                <h4 style="margin-top:20px;">🗂 樓層導覽快速表</h4>
+                <ul>
+                    <li><b>GF／UG：</b>室內水上市場 SookSiam（必逛！）</li>
+                    <li><b>MF／1F：</b>精品品牌、H&M、Zara、%Arabica 咖啡</li>
+                    <li><b>2F：</b>Apple Store、文創、裝置藝術</li>
+                    <li><b>3F：</b>運動用品、車款展示、退稅中心</li>
+                    <li><b>4F：</b>3C 產品區（相機、手機）</li>
+                    <li><b>5F：</b>兒童用品、泰國手工藝 ICONCRAFT</li>
+                    <li><b>6F：</b>Alangkarn 美食街（叢林主題，餐廳超級多）</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Day 4 -->
+        <div class="section" id="day4">
+            <h2>1/2（五）暹羅廣場 / Big C / 火車夜市</h2>
+
+            <div class="item">11:00 暹羅廣場</div>
+            <a class="map-btn"
+               href="https://www.google.com/maps/search/?api=1&query=Siam+Square+Bangkok"
+               target="_blank">暹羅廣場</a>
+
+            <div class="item">Big C（Ratchadamri）</div>
+            <a class="map-btn"
+               href="https://www.google.com/maps/search/?api=1&query=Big+C+Ratchadamri"
+               target="_blank">Big C</a>
+
+            <div class="item">希娜克琳火車夜市</div>
+            <a class="map-btn"
+               href="https://www.google.com/maps/search/?api=1&query=Train+Night+Market+Srinakarin"
+               target="_blank">夜市地圖</a>
+        </div>
+
+        <!-- Day 5 -->
+        <div class="section" id="day5">
+            <h2>1/3（六）返台</h2>
+            <p>13:30 前往機場 → 17:50 起飛 → 22:25 抵達台灣</p>
+        </div>
+    </div>
+</div>
+
+<!-- 燈箱控制腳本 -->
+<script>
+    (function () {
+        const images = [
+            "image/room1.jpg",
+            "image/room2.jpg",
+            "image/room3.jpg"
+        ];
+
+        const thumbs = document.querySelectorAll(".hotel-thumb");
+        const lightbox = document.getElementById("hotel-lightbox");
+        const lightboxImg = document.getElementById("hotel-lightbox-img");
+        const closeBtn = document.querySelector("#hotel-lightbox .close-btn");
+        const prevBtn = document.querySelector("#hotel-lightbox .prev-btn");
+        const nextBtn = document.querySelector("#hotel-lightbox .next-btn");
+
+        let currentIndex = 0;
+
+        function openLightbox(index) {
+            currentIndex = index;
+            lightboxImg.src = images[currentIndex];
+            lightbox.style.display = "flex";
+        }
+
+        function closeLightbox() {
+            lightbox.style.display = "none";
+        }
+
+        function showPrev() {
+            if (images.length > 1) {
+                currentIndex = (currentIndex - 1 + images.length) % images.length;
+                lightboxImg.src = images[currentIndex];
+            }
+        }
+
+        function showNext() {
+            if (images.length > 1) {
+                currentIndex = (currentIndex + 1) % images.length;
+                lightboxImg.src = images[currentIndex];
+            }
+        }
+
+        thumbs.forEach((img) => {
+            img.addEventListener("click", () => {
+                const index = parseInt(img.getAttribute("data-index"), 10) || 0;
+                openLightbox(index);
+            });
+        });
+
+        if (closeBtn) closeBtn.addEventListener("click", closeLightbox);
+        if (prevBtn) prevBtn.addEventListener("click", showPrev);
+        if (nextBtn) nextBtn.addEventListener("click", showNext);
+
+        if (lightbox) {
+            lightbox.addEventListener("click", (e) => {
+                if (e.target === lightbox) {
+                    closeLightbox();
+                }
+            });
+        }
+
+        window.addEventListener("keydown", (e) => {
+            if (lightbox.style.display === "flex") {
+                if (e.key === "Escape") closeLightbox();
+                if (e.key === "ArrowLeft") showPrev();
+                if (e.key === "ArrowRight") showNext();
+            }
+        });
+    })();
+</script>
+<script>
+    if ('serviceWorker' in navigator) {
+        window.addEventListener('load', function () {
+            navigator.serviceWorker.register('service-worker.js')
+                .catch(function (err) {
+                    console.log('ServiceWorker registration failed:', err);
+                });
+        });
+    }
+</script>
+</body>
+</html>
