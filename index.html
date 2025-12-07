@@ -21,17 +21,37 @@
         /* Top Bar */
         header {
             background: linear-gradient(135deg, #ff8a00, #ff5e62);
-            padding: 14px;
+            padding: 10px 14px;
             color: white;
-            text-align: center;
-            font-size: 22px;
-            font-weight: bold;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             position: sticky;
             top: 0;
             z-index: 20;
         }
 
-        /* Date Quick Buttons */
+        .header-title {
+            font-size: 20px;
+            font-weight: bold;
+            text-align: center;
+        }
+
+        /* 漢堡按鈕 */
+        .menu-toggle {
+            position: absolute;
+            left: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: transparent;
+            border: none;
+            color: #fff;
+            font-size: 22px;
+            cursor: pointer;
+            display: none; /* 桌機隱藏，手機顯示 */
+        }
+
+        /* 日期快速按鈕條 */
         .date-bar {
             display: flex;
             overflow-x: auto;
@@ -40,7 +60,7 @@
             background: white;
             border-bottom: 1px solid #eee;
             position: sticky;
-            top: 58px;
+            top: 52px;
             z-index: 15;
         }
 
@@ -56,12 +76,12 @@
             border: 1px solid #ffb8b0;
         }
 
-        /* Main Layout */
+        /* 主版面 */
         .container {
             display: flex;
         }
 
-        /* Menu */
+        /* 左側 Menu (桌機用) */
         nav {
             width: 160px;
             background: white;
@@ -86,7 +106,7 @@
             background: #ffe5d8;
         }
 
-        /* Content */
+        /* 右側內容區 */
         .content {
             flex: 1;
             padding: 16px;
@@ -118,6 +138,58 @@
 
         .item {
             margin-bottom: 12px;
+        }
+
+        /* 表格基礎樣式 */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 12px;
+            font-size: 14px;
+        }
+
+        th,
+        td {
+            border: 1px solid #e0e0e0;
+            padding: 10px;
+            vertical-align: top;
+        }
+
+        th {
+            background: #fff4ef;
+            color: #ff5e62;
+        }
+
+        .day-title {
+            background: #ffece8;
+            font-weight: bold;
+            text-align: center;
+        }
+
+        .traffic-table th {
+            width: 20%;
+        }
+
+        .traffic-day {
+            background: #ffece8;
+            font-weight: bold;
+            text-align: center;
+        }
+
+        .food-table th,
+        .massage-table th {
+            width: 22%;
+        }
+
+        .map-btn-small {
+            display: inline-block;
+            margin-top: 6px;
+            padding: 4px 10px;
+            background: #ff5e62;
+            color: white;
+            border-radius: 6px;
+            text-decoration: none;
+            font-size: 12px;
         }
 
         /* Hotel gallery / lightbox */
@@ -178,13 +250,118 @@
             right: 20px;
         }
 
+        /* 手機版的側邊選單 Overlay */
+        .mobile-menu-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.4);
+            display: none; /* 用 JS 加上 .open 才顯示 */
+            align-items: stretch;
+            justify-content: flex-start;
+            z-index: 30;
+        }
+
+        .mobile-menu-overlay.open {
+            display: flex;
+        }
+
+        .mobile-menu {
+            width: 260px;
+            max-width: 80%;
+            background: #ffffff;
+            height: 100%;
+            padding: 16px 16px 24px;
+            box-shadow: 2px 0 10px rgba(0, 0, 0, 0.25);
+            display: flex;
+            flex-direction: column;
+            animation: slideIn 0.22s ease-out;
+        }
+
+        .mobile-menu-header {
+            font-weight: bold;
+            font-size: 18px;
+            margin-bottom: 12px;
+            color: #ff5e62;
+        }
+
+        .mobile-menu a {
+            padding: 10px 0;
+            border-bottom: 1px solid #f1f1f1;
+            color: #444;
+            text-decoration: none;
+            font-size: 15px;
+        }
+
+        .mobile-menu a:last-child {
+            border-bottom: none;
+        }
+
+        .mobile-menu a:hover {
+            color: #ff5e62;
+        }
+
+        .menu-group-title {
+            margin-top: 14px;
+            margin-bottom: 4px;
+            font-size: 13px;
+            color: #999;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateX(-100%);
+            }
+            to {
+                transform: translateX(0);
+            }
+        }
+
+        /* RWD：小螢幕時調整 */
         @media (max-width: 768px) {
             nav {
-                display: none;
+                display: none; /* 手機隱藏桌機側邊欄 */
             }
 
             .container {
                 display: block;
+            }
+
+            .menu-toggle {
+                display: block; /* 手機顯示漢堡 */
+            }
+
+            .content {
+                padding: 12px;
+            }
+
+            .section {
+                padding: 12px;
+                border-radius: 8px;
+            }
+
+            /* 表格在手機上可滑動，避免爆版 */
+            .section table {
+                display: block;
+                width: 100%;
+                overflow-x: auto;
+                -webkit-overflow-scrolling: touch;
+                white-space: nowrap;
+                font-size: 12px;
+            }
+
+            .section th,
+            .section td {
+                white-space: nowrap;
+            }
+
+            header {
+                padding: 8px 10px;
+            }
+
+            .header-title {
+                font-size: 18px;
             }
         }
     </style>
@@ -192,7 +369,28 @@
 
 <body>
 
-<header>2025 曼谷五天四夜行程</header>
+<header>
+    <button class="menu-toggle" aria-label="開啟選單">☰</button>
+    <div class="header-title">2025 曼谷五天四夜行程</div>
+</header>
+
+<!-- 手機版側邊選單 -->
+<div class="mobile-menu-overlay" id="mobileMenu">
+    <div class="mobile-menu">
+        <div class="mobile-menu-header">2025 曼谷行程</div>
+        <a href="#summary">行程總表</a>
+        <a href="#traffic">交通行程表</a>
+        <a href="#ticket">機票資訊</a>
+        <a href="#hotel">住宿資訊</a>
+
+        <div class="menu-group-title">每日行程</div>
+        <a href="#day1">12/30</a>
+        <a href="#day2">12/31</a>
+        <a href="#day3">1/1</a>
+        <a href="#day4">1/2</a>
+        <a href="#day5">1/3</a>
+    </div>
+</div>
 
 <!-- 日期快選 -->
 <div class="date-bar">
@@ -205,7 +403,7 @@
 
 <div class="container">
 
-    <!-- MENU -->
+    <!-- 桌機版左側 MENU -->
     <nav>
         <a href="#summary">行程總表</a>
         <a href="#traffic">交通行程表</a>
@@ -218,40 +416,12 @@
         <a href="#day5">1/3</a>
     </nav>
 
-    <!-- CONTENT -->
+    <!-- 右側內容 -->
     <div class="content">
 
         <!-- 行程總表 -->
         <div class="section" id="summary">
             <h2>📅 行程總表</h2>
-
-            <style>
-                table {
-                    width: 100%;
-                    border-collapse: collapse;
-                    margin-top: 12px;
-                    font-size: 14px;
-                }
-
-                th,
-                td {
-                    border: 1px solid #e0e0e0;
-                    padding: 10px;
-                    vertical-align: top;
-                }
-
-                th {
-                    background: #fff4ef;
-                    color: #ff5e62;
-                    width: 18%;
-                }
-
-                .day-title {
-                    background: #ffece8;
-                    font-weight: bold;
-                    text-align: center;
-                }
-            </style>
 
             <table>
                 <tr>
@@ -341,34 +511,6 @@
         <!-- 交通行程表 -->
         <div class="section" id="traffic">
             <h2>🚗 交通行程表</h2>
-
-            <style>
-                .traffic-table {
-                    width: 100%;
-                    border-collapse: collapse;
-                    font-size: 14px;
-                    margin-top: 12px;
-                }
-
-                .traffic-table th,
-                .traffic-table td {
-                    border: 1px solid #e0e0e0;
-                    padding: 8px;
-                    vertical-align: top;
-                }
-
-                .traffic-table th {
-                    background: #fff4ef;
-                    color: #ff5e62;
-                    width: 20%;
-                }
-
-                .traffic-day {
-                    background: #ffece8;
-                    font-weight: bold;
-                    text-align: center;
-                }
-            </style>
 
             <table class="traffic-table">
                 <tr>
@@ -500,15 +642,15 @@
             <p>回程：17:50 → 22:25 TPE</p>
             <div style="margin-top:12px;">
                 <img src="image/airplan_ticket_go_HSU.png"
-                     style="width:70%; border-radius:12px; display:block; margin:10px auto;">
+                     style="width:70%; max-width:400px; border-radius:12px; display:block; margin:10px auto;">
             </div>
             <div style="margin-top:12px;">
                 <img src="image/airplan_ticket_back_HSU.png"
-                     style="width:70%; border-radius:12px; display:block; margin:10px auto;">
+                     style="width:70%; max-width:400px; border-radius:12px; display:block; margin:10px auto;">
             </div>
             <div style="margin-top:12px;">
                 <img src="image/airplan_ticket_go&back_chang.png"
-                     style="width:70%; border-radius:12px; display:block; margin:10px auto;">
+                     style="width:70%; max-width:400px; border-radius:12px; display:block; margin:10px auto;">
             </div>
         </div>
 
@@ -525,7 +667,7 @@
             <!-- 主圖片 -->
             <div style="margin-top:12px;">
                 <img src="image/Hotel.png"
-                     style="width:70%; border-radius:12px; display:block; margin:10px auto;">
+                     style="width:70%; max-width:450px; border-radius:12px; display:block; margin:10px auto;">
             </div>
 
             <!-- 縮圖畫廊 -->
@@ -668,42 +810,7 @@
                    href="https://www.google.com/maps/search/?api=1&query=Banthat+Thong+Night+Market"
                    target="_blank">地圖</a>
 
-                <!-- 朱拉夜市餐廳表格 -->
                 <h4 style="margin-top:20px;">🍽️ 夜市熱門餐廳一覽表</h4>
-
-                <style>
-                    .food-table {
-                        width: 100%;
-                        border-collapse: collapse;
-                        font-size: 14px;
-                        margin-top: 12px;
-                    }
-
-                    .food-table th,
-                    .food-table td {
-                        border: 1px solid #e0e0e0;
-                        padding: 10px;
-                        vertical-align: top;
-                    }
-
-                    .food-table th {
-                        background: #fff4ef;
-                        color: #ff5e62;
-                        width: 20%;
-                        text-align: left;
-                    }
-
-                    .map-btn-small {
-                        display: inline-block;
-                        margin-top: 6px;
-                        padding: 4px 10px;
-                        background: #ff5e62;
-                        color: white;
-                        border-radius: 6px;
-                        text-decoration: none;
-                        font-size: 12px;
-                    }
-                </style>
 
                 <table class="food-table">
                     <tr>
@@ -928,28 +1035,6 @@
                     適合安排半天散步＋按摩行程。
                 </p>
 
-                <style>
-                    .massage-table {
-                        width: 100%;
-                        border-collapse: collapse;
-                        font-size: 14px;
-                        margin-top: 12px;
-                    }
-
-                    .massage-table th,
-                    .massage-table td {
-                        border: 1px solid #e0e0e0;
-                        padding: 10px;
-                        vertical-align: top;
-                    }
-
-                    .massage-table th {
-                        background: #fff4ef;
-                        color: #ff5e62;
-                        width: 22%;
-                    }
-                </style>
-
                 <h4 style="margin-top:20px;">💆 按摩店家（王朗市場周邊）</h4>
 
                 <table class="massage-table">
@@ -1065,12 +1150,12 @@
                href="https://www.google.com/maps/search/?api=1&query=Siam+Square+Bangkok"
                target="_blank">暹羅廣場</a>
 
-            <div class="item">Big C（Ratchadamri）</div>
+            <div class="item" style="margin-top:12px;">Big C（Ratchadamri）</div>
             <a class="map-btn"
                href="https://www.google.com/maps/search/?api=1&query=Big+C+Ratchadamri"
                target="_blank">Big C</a>
 
-            <div class="item">希娜克琳火車夜市</div>
+            <div class="item" style="margin-top:12px;">希娜克琳火車夜市</div>
             <a class="map-btn"
                href="https://www.google.com/maps/search/?api=1&query=Train+Night+Market+Srinakarin"
                target="_blank">夜市地圖</a>
@@ -1081,12 +1166,14 @@
             <h2>1/3（六）返台</h2>
             <p>13:30 前往機場 → 17:50 起飛 → 22:25 抵達台灣</p>
         </div>
+
     </div>
 </div>
 
-<!-- 燈箱控制腳本 -->
+<!-- 燈箱控制 + 漢堡選單控制腳本 -->
 <script>
     (function () {
+        // Hotel lightbox
         const images = [
             "image/room1.jpg",
             "image/room2.jpg",
@@ -1152,8 +1239,50 @@
                 if (e.key === "ArrowRight") showNext();
             }
         });
+
+        // Mobile hamburger menu
+        const menuToggle = document.querySelector(".menu-toggle");
+        const mobileMenuOverlay = document.getElementById("mobileMenu");
+
+        function openMenu() {
+            mobileMenuOverlay.classList.add("open");
+        }
+
+        function closeMenu() {
+            mobileMenuOverlay.classList.remove("open");
+        }
+
+        if (menuToggle) {
+            menuToggle.addEventListener("click", openMenu);
+        }
+
+        if (mobileMenuOverlay) {
+            // 點半透明背景關閉
+            mobileMenuOverlay.addEventListener("click", (e) => {
+                if (e.target === mobileMenuOverlay) {
+                    closeMenu();
+                }
+            });
+
+            // 點選單連結也關閉
+            const links = mobileMenuOverlay.querySelectorAll("a");
+            links.forEach((link) => {
+                link.addEventListener("click", () => {
+                    closeMenu();
+                });
+            });
+        }
+
+        // ESC 也可以關閉選單
+        window.addEventListener("keydown", (e) => {
+            if (e.key === "Escape" && mobileMenuOverlay.classList.contains("open")) {
+                closeMenu();
+            }
+        });
     })();
 </script>
+
+<!-- Service Worker 註冊（PWA） -->
 <script>
     if ('serviceWorker' in navigator) {
         window.addEventListener('load', function () {
