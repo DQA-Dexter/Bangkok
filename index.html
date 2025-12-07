@@ -148,6 +148,11 @@
             font-size: 14px;
         }
 
+        .hotel-cell {
+            font-size: 13px;
+            line-height: 1.45;
+            -webkit-text-size-adjust: 100%; /* 阻止自動放大 */
+        }
         th,
         td {
             border: 1px solid #e0e0e0;
@@ -379,6 +384,7 @@
 <div class="mobile-menu-overlay" id="mobileMenu">
     <div class="mobile-menu">
         <div class="mobile-menu-header">2025 曼谷行程</div>
+
         <a href="#summary">行程總表</a>
         <a href="#traffic">交通行程表</a>
         <a href="#ticket">機票資訊</a>
@@ -486,10 +492,9 @@
                         22:25 抵達台灣
                     </td>
                 </tr>
-
                 <tr>
                     <th>住宿</th>
-                    <td colspan="5">
+                    <td colspan="5" class="hotel-cell">
                         通羅薩查公寓酒店（THE SACHA Apart-Hotel Thonglor）<br>
                         房型：薩查一室房 XL・特大床（不含餐）<br>
                         費用：玉山信用卡 NT$11,832／4 晚（已付款、不可取消）<br>
@@ -1230,7 +1235,34 @@
                 if (e.key === "ArrowRight") showNext();
             }
         });
+        const menuToggle = document.querySelector(".menu-toggle");
+        const mobileMenuOverlay = document.getElementById("mobileMenu");
 
+        function openMenu() {
+            mobileMenuOverlay.classList.add("open");
+        }
+
+        function closeMenu() {
+            mobileMenuOverlay.classList.remove("open");
+        }
+
+        if (menuToggle && mobileMenuOverlay) {
+
+            // 點三條線開啟選單
+            menuToggle.addEventListener("click", openMenu);
+
+            // 點背景關閉選單
+            mobileMenuOverlay.addEventListener("click", function (e) {
+                if (e.target === mobileMenuOverlay) {
+                    closeMenu();
+                }
+            });
+
+            // 點選側邊欄的連結後關閉
+            mobileMenuOverlay.querySelectorAll("a").forEach(link => {
+                link.addEventListener("click", closeMenu);
+            });
+        }
     })();
 </script>
 
