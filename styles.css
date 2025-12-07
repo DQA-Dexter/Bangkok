@@ -1,0 +1,520 @@
+/* ===========================
+   全站基礎 Reset
+   =========================== */
+
+   *,
+   *::before,
+   *::after {
+       box-sizing: border-box;
+   }
+   
+   body {
+       margin: 0;
+       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Noto Sans TC", sans-serif;
+       background: #f7f7f7;
+       color: #333;
+   }
+   
+   /* 全站圖片預設不要超出容器 */
+   img {
+       max-width: 100%;
+       height: auto;
+       display: block;
+   }
+   
+   /* ===========================
+      頂部列 Header
+      =========================== */
+   
+   .site-header {
+       background: linear-gradient(135deg, #ff8a00, #ff5e62);
+       padding: 10px 14px;
+       color: #fff;
+       display: flex;
+       align-items: center;
+       justify-content: center;
+       position: sticky;
+       top: 0;
+       z-index: 20;
+   }
+   
+   .header-title {
+       font-size: 20px;
+       font-weight: bold;
+       text-align: center;
+   }
+   
+   /* 手機漢堡按鈕 */
+   .menu-toggle {
+       position: absolute;
+       left: 12px;
+       top: 50%;
+       transform: translateY(-50%);
+       background: transparent;
+       border: none;
+       color: #fff;
+       font-size: 22px;
+       cursor: pointer;
+       display: none; /* 桌機預設隱藏，手機用 RWD 顯示 */
+   }
+   
+   /* ===========================
+      主版面：左側 nav + 右側內容
+      =========================== */
+   
+   .container {
+       display: flex;
+   }
+   
+   /* 左側側邊選單（桌機） */
+   .sidebar-nav {
+       width: 160px;
+       background: #fff;
+       border-right: 1px solid #ddd;
+       height: calc(100vh - 110px);
+       position: sticky;
+       top: 110px;
+       padding: 10px 0 16px;
+       overflow-y: auto;
+   }
+   
+   /* 桌機 nav 連結樣式 */
+   .sidebar-nav a {
+       display: block;
+       padding: 10px 16px;
+       color: #444;
+       text-decoration: none;
+       border-bottom: 1px solid #f1f1f1;
+       font-size: 15px;
+   }
+   
+   .sidebar-nav a:hover {
+       background: #ffe5d8;
+   }
+   
+   /* ★ 在桌機 nav 中插入「每日行程」分組標題（不用改 HTML） */
+   .sidebar-nav a[href="#day1"]::before {
+       content: "每日行程";
+       display: block;
+       padding: 8px 16px 4px;
+       font-size: 12px;
+       color: #999;
+       text-transform: uppercase;
+       letter-spacing: 0.08em;
+   }
+   
+   /* 右側內容區 */
+   .content {
+       flex: 1;
+       padding: 16px;
+   }
+   
+   /* 每個區塊卡片樣式 */
+   .section {
+       background: #fff;
+       padding: 16px;
+       margin-bottom: 20px;
+       border-radius: 10px;
+       box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+   }
+   
+   h2 {
+       margin-top: 0;
+       color: #ff5e62;
+   }
+   
+   .item {
+       margin-bottom: 12px;
+   }
+   
+   /* 小標 & 文字塊補強 */
+   .sub-title {
+       margin-top: 15px;
+       margin-bottom: 6px;
+       font-size: 15px;
+       color: #ff5e62;
+   }
+   
+   .text-block {
+       margin-top: 6px;
+       line-height: 1.6;
+   }
+   
+   .divider {
+       border: none;
+       border-top: 1px solid #eee;
+       margin: 20px 0;
+   }
+   
+   .floor-list {
+       padding-left: 20px;
+       margin-top: 6px;
+   }
+   
+   /* ===========================
+      按鈕樣式
+      =========================== */
+   
+   .map-btn {
+       display: inline-block;
+       margin-top: 6px;
+       padding: 6px 12px;
+       background: #ff5e62;
+       color: #fff;
+       border-radius: 8px;
+       text-decoration: none;
+       font-size: 13px;
+   }
+   
+   .map-btn:hover {
+       opacity: 0.9;
+   }
+   
+   .map-btn-small {
+       display: inline-block;
+       margin-top: 6px;
+       padding: 4px 10px;
+       background: #ff5e62;
+       color: #fff;
+       border-radius: 6px;
+       text-decoration: none;
+       font-size: 12px;
+   }
+   
+   .map-btn-small:hover {
+       opacity: 0.9;
+   }
+   
+   /* ===========================
+      機票票根區塊
+      =========================== */
+   
+   .ticket-gallery {
+       margin-top: 12px;
+   }
+   
+   .ticket-image {
+       width: 70%;
+       max-width: 400px;
+       border-radius: 12px;
+       margin: 10px auto;
+   }
+   
+   /* ===========================
+      表格樣式（行程、交通、美食、按摩）
+      =========================== */
+   
+   table {
+       width: 100%;
+       border-collapse: collapse;
+       margin-top: 12px;
+       font-size: 14px;
+   }
+   
+   th,
+   td {
+       border: 1px solid #e0e0e0;
+       padding: 10px;
+       vertical-align: top;
+   }
+   
+   th {
+       background: #fff4ef;
+       color: #ff5e62;
+   }
+   
+   .day-title {
+       background: #ffece8;
+       font-weight: bold;
+       text-align: center;
+   }
+   
+   .hotel-cell {
+       font-size: 13px;
+       line-height: 1.45;
+   }
+   
+   .traffic-table th {
+       width: 20%;
+   }
+   
+   .traffic-day {
+       background: #ffece8;
+       font-weight: bold;
+       text-align: center;
+   }
+   
+   .food-table th,
+   .massage-table th {
+       width: 22%;
+   }
+   
+   /* 避免表格在小螢幕爆版：整個 table 可左右滑動 */
+   .section table {
+       display: block;
+       width: 100%;
+       overflow-x: auto;
+       -webkit-overflow-scrolling: touch;
+       white-space: nowrap;
+   }
+   
+   /* ===========================
+      Carousel：所有相片區共用
+      =========================== */
+   /*
+   結構：
+   <div class="carousel" data-album="hotel">
+     <button class="carousel-btn carousel-prev">‹</button>
+     <div class="carousel-track">
+       <img class="carousel-item" src="..." data-index="0">
+       ...
+     </div>
+     <button class="carousel-btn carousel-next">›</button>
+   </div>
+   */
+   
+   .carousel {
+       position: relative;
+       display: flex;
+       align-items: center;
+       gap: 8px;
+       margin-top: 12px;
+   }
+   
+   /* 縮圖軌道 */
+   .carousel-track {
+       display: flex;
+       gap: 8px;
+       overflow: hidden;
+       width: 100%;
+       /* JS 會用 transform: translateX(...) 來移動 */
+   }
+   
+   /* 單張縮圖：桌機一排 4 張 */
+   .carousel-item {
+       flex: 0 0 25%;
+       max-width: 25%;
+       border-radius: 10px;
+       cursor: pointer;
+       object-fit: cover;
+       aspect-ratio: 4 / 3;
+       background: #f2f2f2;
+   }
+   
+   /* 左右按鈕 */
+   .carousel-btn {
+       background: rgba(0, 0, 0, 0.45);
+       color: #fff;
+       border: none;
+       font-size: 26px;
+       padding: 6px 10px;
+       cursor: pointer;
+       border-radius: 999px;
+       display: flex;
+       align-items: center;
+       justify-content: center;
+       flex-shrink: 0;
+   }
+   
+   .carousel-btn:hover {
+       background: rgba(0, 0, 0, 0.7);
+   }
+   
+   /* ===========================
+      Lightbox：全螢幕燈箱
+      =========================== */
+   
+   .lightbox {
+       display: none;              /* JS 會改成 flex */
+       position: fixed;
+       inset: 0;
+       background: rgba(0, 0, 0, 0.9);
+       z-index: 9999;
+       justify-content: center;
+       align-items: center;
+   }
+   
+   .lightbox img {
+       max-width: 90%;
+       max-height: 80vh;
+       border-radius: 12px;
+       cursor: zoom-in;
+       transition: transform 0.25s ease;
+   }
+   
+   /* 放大模式 */
+   .lightbox.zoom img {
+       transform: scale(1.6);
+       cursor: zoom-out;
+   }
+   
+   /* 關閉按鈕（右上角） */
+   .lightbox-close {
+       position: absolute;
+       top: 20px;
+       right: 30px;
+       font-size: 34px;
+       color: #fff;
+       cursor: pointer;
+       background: none;
+       border: none;
+   }
+   
+   /* 左右切換按鈕 */
+   .lightbox-nav {
+       position: absolute;
+       top: 50%;
+       transform: translateY(-50%);
+       font-size: 50px;
+       color: #fff;
+       cursor: pointer;
+       padding: 10px;
+       user-select: none;
+       background: none;
+       border: none;
+   }
+   
+   .lightbox-prev {
+       left: 30px;
+   }
+   
+   .lightbox-next {
+       right: 30px;
+   }
+    /* ============================= */
+    /* 🔥 新增：修復左右按鈕不能點擊 */
+    /* ============================= */
+
+    .lightbox {
+        pointer-events: auto;
+    }
+
+    .lightbox img {
+        pointer-events: auto;
+        position: relative;
+        z-index: 10;
+    }
+
+    .lightbox-nav {
+        z-index: 20 !important;
+        pointer-events: auto;
+    }
+   /* ===========================
+      手機版側邊選單（漢堡展開）
+      =========================== */
+   
+   .mobile-menu-overlay {
+       position: fixed;
+       inset: 0;
+       background: rgba(0, 0, 0, 0.4);
+       display: none;              /* JS 加 .open 才顯示 */
+       align-items: stretch;
+       justify-content: flex-start;
+       z-index: 30;
+   }
+   
+   .mobile-menu-overlay.open {
+       display: flex;
+   }
+   
+   .mobile-menu {
+       width: 260px;
+       max-width: 80%;
+       background: #ffffff;
+       height: 100%;
+       padding: 16px 16px 24px;
+       box-shadow: 2px 0 10px rgba(0, 0, 0, 0.25);
+       display: flex;
+       flex-direction: column;
+       animation: slideIn 0.22s ease-out;
+   }
+   
+   .mobile-menu-header {
+       font-weight: bold;
+       font-size: 18px;
+       margin-bottom: 12px;
+       color: #ff5e62;
+   }
+   
+   .mobile-menu a {
+       padding: 10px 0;
+       border-bottom: 1px solid #f1f1f1;
+       color: #444;
+       text-decoration: none;
+       font-size: 15px;
+   }
+   
+   .mobile-menu a:last-child {
+       border-bottom: none;
+   }
+   
+   .mobile-menu a:hover {
+       color: #ff5e62;
+   }
+   
+   .menu-group-title {
+       margin-top: 14px;
+       margin-bottom: 4px;
+       font-size: 13px;
+       color: #999;
+       text-transform: uppercase;
+       letter-spacing: 0.08em;
+   }
+   
+   @keyframes slideIn {
+       from {
+           transform: translateX(-100%);
+       }
+       to {
+           transform: translateX(0);
+       }
+   }
+   
+   
+   /* ===========================
+      RWD：手機版調整
+      =========================== */
+   
+   @media (max-width: 768px) {
+       /* 手機：隱藏桌機側邊欄，改用漢堡 */
+       .sidebar-nav {
+           display: none;
+       }
+   
+       .container {
+           display: block;
+       }
+   
+       .menu-toggle {
+           display: block;
+       }
+   
+       .content {
+           padding: 12px;
+       }
+   
+       .section {
+           padding: 12px;
+           border-radius: 8px;
+       }
+   
+       .site-header {
+           padding: 8px 10px;
+       }
+   
+       .header-title {
+           font-size: 18px;
+       }
+   
+       /* 表格在手機上字再小一點 */
+       table {
+           font-size: 12px;
+       }
+   
+       /* 手機 Carousel：一排 3 張 */
+       .carousel-item {
+           flex: 0 0 33.33%;
+           max-width: 33.33%;
+       }
+   }
+   
