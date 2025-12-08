@@ -539,7 +539,25 @@
         color: #ff5e62; /* 和其他 section 色系一致 */
     }
 
-   
+    .hotel-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    
+    .map-btn-inline {
+        background-color: #ff5e62;
+        color: white;
+        padding: 6px 12px;
+        border-radius: 6px;
+        text-decoration: none;
+        font-size: 14px;
+        white-space: nowrap;
+    }
+    
+    .map-btn-inline:hover {
+        background-color: #ff4148;
+    }
    /* ===========================
       RWD：手機版調整
       =========================== */
