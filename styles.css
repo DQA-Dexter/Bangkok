@@ -315,6 +315,18 @@
        justify-content: center;
        flex-shrink: 0;
    }
+   .carousel-viewport {
+        width: 100%;
+        overflow: hidden;
+        position: relative;
+    }
+    .carousel-track {
+        display: flex;
+        gap: 8px;
+        /* overflow: hidden; <-- 移除這裡的 overflow，讓 viewport 處理 */
+        width: 100%;
+        transition: transform 0.3s ease-out; /* 可選：讓移動看起來更平滑 */
+    }
    
    .carousel-btn:hover {
        background: rgba(0, 0, 0, 0.7);
