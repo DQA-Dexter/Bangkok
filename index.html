@@ -276,15 +276,48 @@
         <!-- 機票 -->
         <section class="section" id="ticket">
             <h2>✈️ 機票資訊</h2>
-            <p>去程：CI835 — 13:50 → 16:45 BKK</p>
-            <p>回程：17:50 → 22:25 TPE</p>
+        
+            <div class="flight-row">
+                <!-- 去程：左邊 -->
+                <div class="flight-card left-card">
+                    <h3>📤 去程｜CI835（華航）</h3>
+                    <p><b>日期：</b>12/30（二）</p>
+                    <p><b>起飛：</b>13:50 — 桃園國際機場 T1 (TPE)</p>
+                    <p><b>抵達：</b>16:45 — 曼谷素萬那普 BKK</p>
+                    <p><b>機型：</b>Airbus A330</p>
+                </div>
+        
+                <!-- 回程：右邊 -->
+                <div class="flight-card right-card">
+                    <h3>📥 回程｜CI836（華航）</h3>
+                    <p><b>日期：</b>1/3（六）</p>
+                    <p><b>起飛：</b>17:50 — 曼谷素萬那普 BKK</p>
+                    <p><b>抵達：</b>22:25 — 桃園國際機場 T1 (TPE)</p>
+                    <p><b>機型：</b>Airbus A330</p>
+                </div>
+            </div>
+        
+            <div class="ticket-columns">
 
-            <div class="ticket-gallery">
-                <img class="ticket-image" src="image/airplan_ticket_go_HSU.png" alt="去程機票 Hsu">
-                <img class="ticket-image" src="image/airplan_ticket_back_HSU.png" alt="回程機票 Hsu">
-                <img class="ticket-image" src="image/airplan_ticket_GO&back_CHANG.png" alt="往返機票 Chang">
+                <!-- Chun 左邊 -->
+                <div class="ticket-card">
+                    <div class="ticket-header">
+                        Chun
+                    </div>
+                    <img class="ticket-image" src="image/airplan_ticket_GO&back_Chun.png" alt="Chun 票根">
+                </div>
+            
+                <!-- Dexter (Chang) 右邊 -->
+                <div class="ticket-card">
+                    <div class="ticket-header">
+                        Dexter
+                    </div>
+                    <img class="ticket-image" src="image/airplan_ticket_GO&back_CHANG.png" alt="Chang 票根">
+                </div>
+            
             </div>
         </section>
+        
 
         <!-- 住宿 -->
         <section class="section" id="hotel">

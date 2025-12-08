@@ -481,7 +481,64 @@
            transform: translateX(0);
        }
    }
-   
+   /* 機票卡片左右佈局 */
+    .flight-row {
+        display: flex;
+        justify-content: space-between;
+        gap: 20px;
+        margin-bottom: 18px;
+    }
+
+    .flight-card {
+        flex: 1;
+        background: #ffffff;
+        padding: 14px 18px;
+        border-radius: 10px;
+        border-left: 4px solid #ff5e62;
+        box-shadow: 0 2px 6px rgba(0,0,0,0.06);
+    }
+
+    /* 左右卡片各自靠邊 */
+    .left-card {
+        text-align: left;
+    }
+
+    .right-card {
+        text-align: left;
+    }
+
+    /* 標題色調 */
+    .flight-card h3 {
+        margin-top: 0;
+        color: #ff5e62;
+        font-size: 16px;
+    }
+    .ticket-columns {
+        display: flex;
+        justify-content: space-between;
+        gap: 20px;
+        margin-top: 18px;
+    }
+    
+    .ticket-card {
+        flex: 1;
+        background: #ffffff; /* 你網站的溫暖底色 */
+        padding: 14px 18px;
+        border-radius: 12px;
+        box-shadow: 0 3px 8px rgba(0,0,0,0.05);
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+    }
+    
+    .ticket-header {
+        font-size: 18px;
+        font-weight: bold;
+        padding-bottom: 6px;
+        border-bottom: 2px solid #ff5e62; /* 🔥 你想要的橫線 */
+        color: #ff5e62; /* 和其他 section 色系一致 */
+    }
+
    
    /* ===========================
       RWD：手機版調整
@@ -528,5 +585,15 @@
            flex: 0 0 33.33%;
            max-width: 33.33%;
        }
+       .flight-row {
+        flex-direction: column;
+        }
+
+        .right-card {
+            text-align: left;  /* 手機時左右一致較好讀 */
+        }
+        .ticket-columns {
+            flex-direction: column;
+        }
    }
    
