@@ -595,5 +595,9 @@
         .ticket-columns {
             flex-direction: column;
         }
+        .hotel-cell {
+            font-size: 12px; /* 將字體大小調整為 14px，適用於手機 */
+            line-height: 1.6; /* 增加行高，讓文字在手機上更容易閱讀 */
+        }
    }
    
